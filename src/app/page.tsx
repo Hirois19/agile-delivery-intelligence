@@ -15,7 +15,7 @@ const modules = [
     title: "Tech Debt Business Translator",
     description:
       "Converts technical debt from engineer-speak into business impact: delay days, velocity drag, and opportunity cost in euros. Makes the invisible visible to stakeholders.",
-    status: "coming" as const,
+    status: "live" as const,
     icon: "translate",
     tags: ["Product Manager", "Stakeholder Mgmt"],
   },
@@ -24,7 +24,7 @@ const modules = [
     title: "Estimation Bias Analyzer",
     description:
       "Analyzes why estimates miss — not just by how much. Detects systematic patterns (optimism bias, anchoring, planning fallacy) and provides calibration factors.",
-    status: "coming" as const,
+    status: "live" as const,
     icon: "chart",
     tags: ["Scrum Master", "Continuous Improvement"],
   },
@@ -33,7 +33,7 @@ const modules = [
     title: "M&A Integration Playbook",
     description:
       "Generates phased integration playbooks for post-acquisition team merges. Built from real experience integrating 3 product teams across NL-DE after SITA × Materna IPS.",
-    status: "coming" as const,
+    status: "live" as const,
     icon: "merge",
     tags: ["Delivery Manager", "Post-M&A"],
   },

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
-import { TEAM_HEALTH_SYSTEM_PROMPT } from "@/lib/prompts";
-import { MOCK_RESPONSES, MOCK_HEALTH_ANALYSIS } from "@/lib/mock-response";
+import { MNA_INTEGRATION_SYSTEM_PROMPT } from "@/lib/mna-prompts";
+import { MNA_MOCK_RESPONSES, DEFAULT_MNA_MOCK } from "@/lib/mna-mock-response";
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,13 +13,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Use mock response when API key is not configured
     const apiKey = process.env.ANTHROPIC_API_KEY;
     if (!apiKey || apiKey === "your-api-key-here") {
-      // Simulate network delay for realistic demo
       await new Promise((resolve) => setTimeout(resolve, 1500));
       const mockResponse =
-        (scenarioId && MOCK_RESPONSES[scenarioId]) || MOCK_HEALTH_ANALYSIS;
+        (scenarioId && MNA_MOCK_RESPONSES[scenarioId]) || DEFAULT_MNA_MOCK;
       return NextResponse.json(mockResponse);
     }
 
@@ -27,12 +25,12 @@ export async function POST(request: NextRequest) {
 
     const message = await client.messages.create({
       model: "claude-sonnet-4-20250514",
-      max_tokens: 4096,
-      system: TEAM_HEALTH_SYSTEM_PROMPT,
+      max_tokens: 8192,
+      system: MNA_INTEGRATION_SYSTEM_PROMPT,
       messages: [
         {
           role: "user",
-          content: `Analyze the following team data and provide a comprehensive health diagnostic:\n\n${data}`,
+          content: `Generate an M&A integration playbook for the following scenario:\n\n${data}`,
         },
       ],
     });
