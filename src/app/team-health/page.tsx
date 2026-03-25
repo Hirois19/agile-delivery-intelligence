@@ -7,8 +7,12 @@ import { GuidedForm } from "@/components/ui/GuidedForm";
 import { ScoreCard, ResultSection } from "@/components/ui/AnalysisResult";
 import { JudgmentLayer } from "@/components/ui/JudgmentLayer";
 import { HealthRadar } from "@/components/charts/HealthRadar";
+import { PrivacyNotice } from "@/components/ui/PrivacyNotice";
+import { ExportButton } from "@/components/ui/ExportButton";
 import { TEAM_HEALTH_SAMPLES } from "@/lib/sample-data";
 import type { TeamHealthAnalysis } from "@/lib/types";
+import type { ExportableTask } from "@/lib/export-tasks";
+import { urgencyToPriority } from "@/lib/export-tasks";
 
 type InputMode = "guided" | "paste";
 
@@ -150,6 +154,10 @@ export default function TeamHealthPage() {
         </p>
       </div>
 
+      <div className="mb-6">
+        <PrivacyNotice />
+      </div>
+
       {/* Input Mode Tabs */}
       <div className="mb-6 flex gap-1 rounded-lg bg-neutral-100 p-1 dark:bg-neutral-800">
         <button
@@ -264,6 +272,20 @@ export default function TeamHealthPage() {
 
           {/* Action Items */}
           <ResultSection title="Recommended Actions">
+            <div className="mb-4">
+              <ExportButton
+                filenamePrefix="team-health-actions"
+                tasks={analysis.actionItems.map((item): ExportableTask => ({
+                  title: item.action,
+                  description: `Type: ${item.type}. ${item.expectedOutcome}`,
+                  priority: urgencyToPriority(item.urgency),
+                  type: item.type,
+                  module: "Team Health Diagnostic",
+                  urgency: item.urgency === "act_now" ? "Act Now" : item.urgency === "next_retro" ? "Next Retro" : "Monitor",
+                  expectedOutcome: item.expectedOutcome,
+                }))}
+              />
+            </div>
             <div className="space-y-3">
               {analysis.actionItems.map((item, i) => (
                 <div

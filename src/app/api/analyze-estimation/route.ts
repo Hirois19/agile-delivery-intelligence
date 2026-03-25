@@ -25,6 +25,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(mockResponse);
     }
 
+    const { anonymize, deanonymizeJson } = await import("@/lib/anonymize");
+    const { parseAIJson } = await import("@/lib/parse-ai-json");
+
+    const { anonymizedText, mappings } = anonymize(data);
     const client = new Anthropic({ apiKey });
 
     const message = await client.messages.create({
@@ -34,7 +38,7 @@ export async function POST(request: NextRequest) {
       messages: [
         {
           role: "user",
-          content: `Analyze the following estimation data for bias patterns:\n\n${data}`,
+          content: `Analyze the following estimation data for bias patterns:\n\n${anonymizedText}`,
         },
       ],
     });
@@ -47,9 +51,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { parseAIJson } = await import("@/lib/parse-ai-json");
     const analysis = parseAIJson(textBlock.text);
-    return NextResponse.json(analysis);
+    const restored = deanonymizeJson(analysis, mappings);
+    return NextResponse.json(restored);
   } catch (error) {
     console.error("Analysis error:", error);
     const msg =

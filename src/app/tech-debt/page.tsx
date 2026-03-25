@@ -7,8 +7,11 @@ import { TechDebtForm } from "@/components/ui/TechDebtForm";
 import { ResultSection } from "@/components/ui/AnalysisResult";
 import { JudgmentLayer } from "@/components/ui/JudgmentLayer";
 import { DebtPriorityMatrix, AnnualCostBar } from "@/components/charts/DebtPriorityMatrix";
+import { PrivacyNotice } from "@/components/ui/PrivacyNotice";
+import { ExportButton } from "@/components/ui/ExportButton";
 import { TECH_DEBT_SAMPLES } from "@/lib/tech-debt-sample-data";
 import type { TechDebtAnalysis } from "@/lib/tech-debt-types";
+import type { ExportableTask } from "@/lib/export-tasks";
 
 type InputMode = "guided" | "paste";
 
@@ -118,6 +121,10 @@ export default function TechDebtPage() {
           </button>{" "}
           and load a sample scenario.
         </p>
+      </div>
+
+      <div className="mb-6">
+        <PrivacyNotice />
       </div>
 
       {/* Input Mode Tabs */}
@@ -272,6 +279,22 @@ export default function TechDebtPage() {
 
           {/* Repayment Plan */}
           <ResultSection title="Quarterly Repayment Plan">
+            <div className="mb-4">
+              <ExportButton
+                filenamePrefix="tech-debt-actions"
+                tasks={analysis.repaymentPlan.flatMap((q): ExportableTask[] =>
+                  q.debtItems.map((item) => ({
+                    title: `[${q.quarter}] Fix: ${item}`,
+                    description: `Quarter: ${q.quarter}. Sprint allocation: ${q.sprintAllocation}. Expected: ${q.expectedVelocityGain}. Milestone: ${q.milestone}`,
+                    priority: q.quarter.includes("Current") || q.quarter.includes("Q2") ? "Critical" : "High",
+                    type: "Tech Debt Repayment",
+                    module: "Tech Debt Translator",
+                    urgency: q.quarter,
+                    expectedOutcome: q.expectedVelocityGain,
+                  }))
+                )}
+              />
+            </div>
             <div className="space-y-4">
               {analysis.repaymentPlan.map((quarter, i) => (
                 <div key={i} className="rounded-md border border-[var(--color-border)] p-4">

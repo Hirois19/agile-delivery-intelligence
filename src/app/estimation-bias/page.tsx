@@ -7,8 +7,11 @@ import { EstimationForm } from "@/components/ui/EstimationForm";
 import { ResultSection } from "@/components/ui/AnalysisResult";
 import { JudgmentLayer } from "@/components/ui/JudgmentLayer";
 import { BiasHeatmap, EstimationScatter, FeatureBlowupChart } from "@/components/charts/BiasHeatmap";
+import { PrivacyNotice } from "@/components/ui/PrivacyNotice";
+import { ExportButton } from "@/components/ui/ExportButton";
 import { ESTIMATION_BIAS_SAMPLES } from "@/lib/estimation-sample-data";
 import type { EstimationBiasAnalysis } from "@/lib/estimation-types";
+import type { ExportableTask } from "@/lib/export-tasks";
 
 type InputMode = "guided" | "paste";
 
@@ -108,6 +111,10 @@ export default function EstimationBiasPage() {
           </button>{" "}
           and load a scenario (Sprint or PI mode).
         </p>
+      </div>
+
+      <div className="mb-6">
+        <PrivacyNotice />
       </div>
 
       {/* Input Mode Tabs */}
@@ -262,6 +269,19 @@ export default function EstimationBiasPage() {
 
           {/* Facilitation Guide */}
           <ResultSection title="Facilitation Guide">
+            <div className="mb-4">
+              <ExportButton
+                filenamePrefix="estimation-bias-actions"
+                tasks={analysis.facilitationGuide.map((tip, i): ExportableTask => ({
+                  title: `Estimation improvement: ${tip.context}`,
+                  description: `Technique: ${tip.technique}\n\nExpected: ${tip.expectedOutcome}`,
+                  priority: i === 0 ? "High" : "Medium",
+                  type: "Process Improvement",
+                  module: "Estimation Bias Analyzer",
+                  expectedOutcome: tip.expectedOutcome,
+                }))}
+              />
+            </div>
             <div className="space-y-3">
               {analysis.facilitationGuide.map((tip, i) => (
                 <div key={i} className="rounded-md border border-[var(--color-border)] p-3">

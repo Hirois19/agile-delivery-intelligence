@@ -7,8 +7,11 @@ import { MnAForm } from "@/components/ui/MnAForm";
 import { ResultSection } from "@/components/ui/AnalysisResult";
 import { JudgmentLayer } from "@/components/ui/JudgmentLayer";
 import { PhaseTimeline, RiskRadar, ToolingGapMatrix } from "@/components/charts/IntegrationTimeline";
+import { PrivacyNotice } from "@/components/ui/PrivacyNotice";
+import { ExportButton } from "@/components/ui/ExportButton";
 import { MNA_SAMPLES } from "@/lib/mna-sample-data";
 import type { MnAIntegrationAnalysis } from "@/lib/mna-types";
+import type { ExportableTask } from "@/lib/export-tasks";
 
 type InputMode = "guided" | "paste";
 
@@ -93,6 +96,10 @@ export default function MnAPage() {
           <button type="button" onClick={() => setInputMode("paste")} className="text-[var(--color-accent)] hover:underline">Switch to Paste Data</button>{" "}
           and load a scenario (same-tool merge, cross-border NL-DE, or resistant team).
         </p>
+      </div>
+
+      <div className="mb-6">
+        <PrivacyNotice />
       </div>
 
       {/* Tabs */}
@@ -243,6 +250,31 @@ export default function MnAPage() {
 
           {/* Do First / Never Do */}
           <ResultSection title="Do First / Never Do Checklist">
+            <div className="mb-4">
+              <ExportButton
+                filenamePrefix="mna-integration-actions"
+                tasks={[
+                  ...analysis.doFirstNeverDoChecklist.doFirst.map((item, i): ExportableTask => ({
+                    title: `[DO FIRST] ${item}`,
+                    description: item,
+                    priority: i < 3 ? "Critical" : "High",
+                    type: "Integration Action",
+                    module: "M&A Integration Playbook",
+                    urgency: "Do First",
+                  })),
+                  ...analysis.playbook.flatMap((phase) =>
+                    phase.keyActivities.map((activity): ExportableTask => ({
+                      title: `[${phase.phaseName}] ${activity}`,
+                      description: `Phase ${phase.phaseNumber}: ${phase.phaseName} (${phase.durationWeeks} weeks)`,
+                      priority: phase.phaseNumber <= 2 ? "High" : "Medium",
+                      type: "Integration Activity",
+                      module: "M&A Integration Playbook",
+                      urgency: phase.phaseName,
+                    }))
+                  ),
+                ]}
+              />
+            </div>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <p className="text-xs font-semibold text-green-600 dark:text-green-400 mb-2">DO FIRST</p>
