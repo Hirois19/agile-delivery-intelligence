@@ -144,6 +144,52 @@ export default function Home() {
         </p>
       </section>
 
+      <section className="mb-12">
+        <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-[var(--color-text-secondary)]">
+          Sample Results
+        </h2>
+        <p className="mb-4 text-xs text-[var(--color-text-secondary)]">
+          Here&apos;s what the AI analysis looks like. These are real outputs
+          from built-in sample scenarios — try them yourself.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Link href="/team-health" className="group block overflow-hidden rounded-lg border border-[var(--color-border)] transition-colors hover:border-[var(--color-accent)]">
+            <div className="aspect-[4/3] overflow-hidden bg-neutral-50 dark:bg-neutral-900">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/screenshots/team-health-result.png"
+                alt="Team Health Diagnostic — sample analysis showing health scores, radar chart, root causes, and PM judgment layer"
+                className="h-full w-full object-cover object-top transition-transform group-hover:scale-[1.02]"
+              />
+            </div>
+            <div className="p-3">
+              <p className="text-sm font-semibold">Team Health Diagnostic</p>
+              <p className="mt-0.5 text-xs text-[var(--color-text-secondary)]">
+                Health scores, radar chart, root cause analysis, action items
+                with export, and PM Judgment Layer
+              </p>
+            </div>
+          </Link>
+          <Link href="/tech-debt" className="group block overflow-hidden rounded-lg border border-[var(--color-border)] transition-colors hover:border-[var(--color-accent)]">
+            <div className="aspect-[4/3] overflow-hidden bg-neutral-50 dark:bg-neutral-900">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/screenshots/tech-debt-result.png"
+                alt="Tech Debt Business Translator — sample analysis showing executive summary, priority matrix, ROI calculations"
+                className="h-full w-full object-cover object-top transition-transform group-hover:scale-[1.02]"
+              />
+            </div>
+            <div className="p-3">
+              <p className="text-sm font-semibold">Tech Debt Business Translator</p>
+              <p className="mt-0.5 text-xs text-[var(--color-text-secondary)]">
+                Executive summary in EUR, priority matrix, ROI table,
+                quarterly repayment plan, CSV export
+              </p>
+            </div>
+          </Link>
+        </div>
+      </section>
+
       <section>
         <h2 className="mb-6 text-sm font-semibold uppercase tracking-wider text-[var(--color-text-secondary)]">
           Modules
