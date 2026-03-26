@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GlossaryButton } from "@/components/ui/Glossary";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,7 +15,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen antialiased">{children}</body>
+      <body className="min-h-screen antialiased">
+        {children}
+        <GlossaryButton />
+      </body>
     </html>
   );
 }

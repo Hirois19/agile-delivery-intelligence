@@ -79,7 +79,7 @@ export default function Home() {
             LinkedIn
           </a>
           <a
-            href="https://github.com/hiroya-ishida"
+            href="https://github.com/Hirois19"
             target="_blank"
             rel="noopener noreferrer"
             className="underline underline-offset-2 hover:text-[var(--color-text)]"
@@ -99,6 +99,48 @@ export default function Home() {
           <strong>why it happened</strong> and{" "}
           <strong>what to do about it</strong>. That judgment layer — the space
           between data and decision — is where this tool lives.
+        </p>
+      </section>
+
+      <section className="mb-12">
+        <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-[var(--color-text-secondary)]">
+          What You Get
+        </h2>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div className="rounded-lg border border-[var(--color-border)] p-4">
+            <p className="text-sm font-semibold">AI-Powered Analysis</p>
+            <p className="mt-1 text-xs text-[var(--color-text-secondary)]">
+              Paste your data or use the guided form. AI cross-references
+              multiple signals to identify root causes and patterns.
+            </p>
+          </div>
+          <div className="rounded-lg border border-[var(--color-border)] p-4">
+            <p className="text-sm font-semibold">PM Judgment Layer</p>
+            <p className="mt-1 text-xs text-[var(--color-text-secondary)]">
+              Every recommendation includes two perspectives: what the AI
+              suggests vs. what an experienced PM/SM should actually do — and
+              why they differ.
+            </p>
+          </div>
+          <div className="rounded-lg border border-[var(--color-border)] p-4">
+            <p className="text-sm font-semibold">Actionable Output</p>
+            <p className="mt-1 text-xs text-[var(--color-text-secondary)]">
+              Prioritized action items, correction factors, and phased plans.
+              Export directly to Jira, Azure DevOps, or Asana as CSV.
+            </p>
+          </div>
+          <div className="rounded-lg border border-[var(--color-border)] p-4">
+            <p className="text-sm font-semibold">Privacy-First</p>
+            <p className="mt-1 text-xs text-[var(--color-text-secondary)]">
+              Names and team identifiers are automatically anonymized before
+              AI processing. Sample scenarios work entirely offline.
+            </p>
+          </div>
+        </div>
+        <p className="mt-4 text-xs text-[var(--color-text-secondary)]">
+          Each module includes built-in sample scenarios — try them with no
+          data entry required. Look for the{" "}
+          <strong>&ldquo;Load sample data&rdquo;</strong> button.
         </p>
       </section>
 

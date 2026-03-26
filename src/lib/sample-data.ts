@@ -9,7 +9,7 @@ export const TEAM_HEALTH_SAMPLES: SampleScenario[] = [
   {
     id: "scrum-adoption",
     name: "Scrum Adoption (Early Stage)",
-    description: "Scrum導入3ヶ月目 — SP見積もり精度が低く、ロールオーバーが頻発するチーム",
+    description: "3 months into Scrum — low SP estimation accuracy, frequent rollover",
     data: `## Team: SmartShip Logistics (7 engineers, 1 PO, 1 SM — first-time SM)
 
 ### Context
@@ -80,7 +80,7 @@ export const TEAM_HEALTH_SAMPLES: SampleScenario[] = [
   {
     id: "safe-adoption",
     name: "SAFe Adoption (PI Planning + Scrum)",
-    description: "SAFe導入6ヶ月 — PI Planningとスプリントの2層で分析。PI間のフィーチャー繰越パターンに注目",
+    description: "6 months into SAFe — dual-layer analysis (PI + Sprint), feature carryover patterns",
     data: `## Team: InfraPlatform (9 engineers, 1 PO, 1 SM, part of ART "Cloud Foundation" — 4 teams)
 
 ### Context
