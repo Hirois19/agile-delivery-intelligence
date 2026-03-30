@@ -13,6 +13,7 @@ import { TEAM_HEALTH_SAMPLES } from "@/lib/sample-data";
 import type { TeamHealthAnalysis } from "@/lib/types";
 import type { ExportableTask } from "@/lib/export-tasks";
 import { urgencyToPriority } from "@/lib/export-tasks";
+import { AnalyticsTracker, track } from "@/components/ui/AnalyticsTracker";
 
 type InputMode = "guided" | "paste";
 
@@ -77,6 +78,7 @@ export default function TeamHealthPage() {
   const [inputMode, setInputMode] = useState<InputMode>("guided");
 
   async function handleAnalyze(data: string) {
+    track("analyze", "team-health");
     setIsLoading(true);
     setError(null);
     setAnalysis(null);
@@ -107,6 +109,7 @@ export default function TeamHealthPage() {
       title="Team Health Diagnostic"
       subtitle="AI-powered multi-signal analysis that goes beyond dashboards — diagnosing why your team struggles, not just that it does."
     >
+      <AnalyticsTracker module="team-health" />
       {/* How It Works */}
       <div className="mb-8 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
         <h2 className="text-sm font-semibold uppercase tracking-wider text-[var(--color-text-secondary)]">
@@ -196,7 +199,7 @@ export default function TeamHealthPage() {
           onSubmit={handleAnalyze}
           isLoading={isLoading}
           samples={TEAM_HEALTH_SAMPLES}
-          onSampleLoad={(id) => setSelectedScenarioId(id)}
+          onSampleLoad={(id) => { setSelectedScenarioId(id); track("sample_load", "team-health", { scenarioId: id }); }}
         />
       )}
 

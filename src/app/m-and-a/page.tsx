@@ -12,6 +12,7 @@ import { ExportButton } from "@/components/ui/ExportButton";
 import { MNA_SAMPLES } from "@/lib/mna-sample-data";
 import type { MnAIntegrationAnalysis } from "@/lib/mna-types";
 import type { ExportableTask } from "@/lib/export-tasks";
+import { AnalyticsTracker, track } from "@/components/ui/AnalyticsTracker";
 
 type InputMode = "guided" | "paste";
 
@@ -44,6 +45,7 @@ export default function MnAPage() {
   const [inputMode, setInputMode] = useState<InputMode>("guided");
 
   async function handleAnalyze(data: string) {
+    track("analyze", "m-and-a");
     setIsLoading(true);
     setError(null);
     setAnalysis(null);
@@ -74,6 +76,7 @@ export default function MnAPage() {
       title="M&A Integration Playbook"
       subtitle="Generate a phased integration playbook for post-acquisition agile team merges — with tooling gap analysis, team reorganization plan, and lessons from real M&A experience."
     >
+      <AnalyticsTracker module="m-and-a" />
       {/* How It Works */}
       <div className="mb-8 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
         <h2 className="text-sm font-semibold uppercase tracking-wider text-[var(--color-text-secondary)]">How It Works</h2>
@@ -117,7 +120,7 @@ export default function MnAPage() {
           onSubmit={handleAnalyze}
           isLoading={isLoading}
           samples={MNA_SAMPLES}
-          onSampleLoad={(id) => setSelectedScenarioId(id)}
+          onSampleLoad={(id) => { setSelectedScenarioId(id); track("sample_load", "m-and-a", { scenarioId: id }); }}
         />
       )}
 

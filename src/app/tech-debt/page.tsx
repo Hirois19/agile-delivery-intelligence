@@ -12,6 +12,7 @@ import { ExportButton } from "@/components/ui/ExportButton";
 import { TECH_DEBT_SAMPLES } from "@/lib/tech-debt-sample-data";
 import type { TechDebtAnalysis } from "@/lib/tech-debt-types";
 import type { ExportableTask } from "@/lib/export-tasks";
+import { AnalyticsTracker, track } from "@/components/ui/AnalyticsTracker";
 
 type InputMode = "guided" | "paste";
 
@@ -50,6 +51,7 @@ export default function TechDebtPage() {
   const [inputMode, setInputMode] = useState<InputMode>("guided");
 
   async function handleAnalyze(data: string) {
+    track("analyze", "tech-debt");
     setIsLoading(true);
     setError(null);
     setAnalysis(null);
@@ -80,6 +82,7 @@ export default function TechDebtPage() {
       title="Tech Debt Business Translator"
       subtitle="Convert technical debt from engineer-speak into business impact: delay days, velocity drag, and cost in EUR."
     >
+      <AnalyticsTracker module="tech-debt" />
       {/* How It Works */}
       <div className="mb-8 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
         <h2 className="text-sm font-semibold uppercase tracking-wider text-[var(--color-text-secondary)]">
@@ -163,7 +166,7 @@ export default function TechDebtPage() {
           onSubmit={handleAnalyze}
           isLoading={isLoading}
           samples={TECH_DEBT_SAMPLES}
-          onSampleLoad={(id) => setSelectedScenarioId(id)}
+          onSampleLoad={(id) => { setSelectedScenarioId(id); track("sample_load", "tech-debt", { scenarioId: id }); }}
         />
       )}
 

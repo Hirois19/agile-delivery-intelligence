@@ -12,6 +12,7 @@ import { ExportButton } from "@/components/ui/ExportButton";
 import { ESTIMATION_BIAS_SAMPLES } from "@/lib/estimation-sample-data";
 import type { EstimationBiasAnalysis } from "@/lib/estimation-types";
 import type { ExportableTask } from "@/lib/export-tasks";
+import { AnalyticsTracker, track } from "@/components/ui/AnalyticsTracker";
 
 type InputMode = "guided" | "paste";
 
@@ -44,6 +45,7 @@ export default function EstimationBiasPage() {
   const [inputMode, setInputMode] = useState<InputMode>("guided");
 
   async function handleAnalyze(data: string) {
+    track("analyze", "estimation-bias");
     setIsLoading(true);
     setError(null);
     setAnalysis(null);
@@ -74,6 +76,7 @@ export default function EstimationBiasPage() {
       title="Estimation Bias Analyzer"
       subtitle="Detect systematic patterns in why estimates miss — not just by how much. Supports sprint-level stories and PI-level features."
     >
+      <AnalyticsTracker module="estimation-bias" />
       {/* How It Works */}
       <div className="mb-8 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
         <h2 className="text-sm font-semibold uppercase tracking-wider text-[var(--color-text-secondary)]">
@@ -143,7 +146,7 @@ export default function EstimationBiasPage() {
           onSubmit={handleAnalyze}
           isLoading={isLoading}
           samples={ESTIMATION_BIAS_SAMPLES}
-          onSampleLoad={(id) => setSelectedScenarioId(id)}
+          onSampleLoad={(id) => { setSelectedScenarioId(id); track("sample_load", "estimation-bias", { scenarioId: id }); }}
         />
       )}
 

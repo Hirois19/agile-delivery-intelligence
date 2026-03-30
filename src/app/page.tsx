@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ImageLightbox } from "@/components/ui/ImageLightbox";
+import { AnalyticsTracker } from "@/components/ui/AnalyticsTracker";
 
 const modules = [
   {
@@ -59,6 +60,7 @@ function StatusBadge({ status }: { status: "live" | "coming" }) {
 export default function Home() {
   return (
     <main className="mx-auto max-w-4xl px-6 py-16">
+      <AnalyticsTracker module="home" />
       <header className="mb-16">
         <h1 className="text-3xl font-bold tracking-tight">
           Agile Delivery Intelligence
